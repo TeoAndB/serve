@@ -1,3 +1,22 @@
+## Note: This is a repo forked in order to try out deplying a huggingface model
+## How to run
+#######################
+Clone this repo and run on the terminal:
+```
+mkdir model_store
+```
+```
+torch-model-archiver --model-name "bert-meme-model" --version 1.0 --serialized-file ./model_dir/deployable_model.pt --extra-files "./model_dir/classification_dict.json" --handler "./ts/torch_handler/bert_handler.py"
+```
+```
+mv bert-meme-model.mar model_store  
+```
+```
+torchserve --start --model-store model_store --models bert-meme-model=bert-meme-model.mar
+```
+curl -X POST http://127.0.0.1:8080/predictions/bert-meme-model -T ./model_dir/meme_text_sample.txt
+########################
+
 # TorchServe
 
 TorchServe is a flexible and easy to use tool for serving PyTorch models.
